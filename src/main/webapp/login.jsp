@@ -9,34 +9,31 @@
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Ingreso de usuario</title>
+<title>Login</title>
 </head>
 <body>
-	<form>
+	<form action="login" method="post" >
 		<div class="form-group">
 			<label for="exampleInputEmail1">Email address</label> 
-			<input type="email" class="form-control" id="exampleInputEmail1"
+			<input type="text" class="form-control" name="exampleInputEmail1"
 				aria-describedby="emailHelp" placeholder="Enter email">
-			 <small	id="emailHelp" class="form-text text-muted">We'll never
+			<small	id="emailHelp" class="form-text text-muted">We'll never
 				share your email with anyone else.</small>
 		</div>
 		<div class="form-group">
-			<label for="exampleInputPassword1">Password</label> <input
-				type="password" class="form-control" id="exampleInputPassword1"
+			<label for="exampleInputPassword1">Password</label> 
+			<input type="password" class="form-control" id="exampleInputPassword1"
+				name="exampleInputPassword1"
 				placeholder="Password">
 		</div>
 		<div class="form-group">
 			<label for="exampleFormControlSelect1">Example select</label>
-			
-			<% List<Pais> paises = (List<Pais>) session.getAttribute("paises"); 
-				System.out.println(paises.size());
+			<% List<Pais> paises = (List<Pais>) session.getAttribute("paises");
 			%>	
 			
-			<select class="form-control" id="exampleFormControlSelect1">
-			
+			<select class="form-control" id="pais" name="pais">
 			<% for(Pais pais : paises) { %>
-				<option id="<%= pais.getId() %>" > <%= pais.getName() %> </option>
-				 
+			 <option value="<%= pais.getId() %>" id="<%= pais.getId() %>" > <%= pais.getName() %> </option>
 			<% } %>
 			</select>
 		</div>

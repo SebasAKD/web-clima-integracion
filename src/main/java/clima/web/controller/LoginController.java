@@ -1,8 +1,9 @@
-package clima.web.servlet;
+package clima.web.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import clima.web.model.Ciudad;
 import clima.web.model.Pais;
+import clima.web.model.Usuario;
+import clima.web.services.CiudadService;
 
 
 @WebServlet("/login")
@@ -22,11 +26,10 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		Collection<Pais> paises = getPaises();
+		CiudadService service = new CiudadService();
+		List<Pais> paises = service.getPaises();
 		
-		request.setAttribute("paises", paises);
-		
-		
+		request.getSession().setAttribute("paises", paises);
 		
 		response.sendRedirect("login.jsp");
 		
@@ -38,39 +41,23 @@ public class LoginController extends HttpServlet {
 		String user =  req.getParameter("exampleInputEmail1");
 		String password =  req.getParameter("exampleInputPassword1");
 		Integer pais = Integer.valueOf(req.getParameter("pais"));
-		super.doPost(req, resp);
+		
+		CiudadService ser = new CiudadService();
+		
+		Pais paisElegido = ser.getPais(pais);
+		
+		List<Ciudad> ciudades = ser.getCiudades(pais);
+		
+		Usuario usuario = new Usuario();
+		usuario.setNombre(user);
+		
+		req.getSession().setAttribute("usuario", usuario);
+		req.getSession().setAttribute("ciudades", ciudades);
+		req.getSession().setAttribute("nombrePais", paisElegido.getName());
+		
+		resp.sendRedirect("preferences.jsp");
 	}
 
-	private Collection<Pais> getPaises(){
-		Collection<Pais> listaPaises = new ArrayList<>();
-		
-		Pais arg = new Pais();
-		arg.setId(54);
-		arg.setName("Argentina");
-		
-		Pais uru = new Pais();
-		uru.setId(598);
-		uru.setName("Uruguay");
-		
-		Pais bra = new Pais();
-		uru.setId(55);
-		uru.setName("Brasil");
-		
-		Pais chi = new Pais();
-		uru.setId(56);
-		uru.setName("Chile");
-		
-		Pais par = new Pais();
-		uru.setId(595);
-		uru.setName("Paraguay");
-		
-		listaPaises.add(arg);
-		listaPaises.add(uru);
-		listaPaises.add(bra);
-		listaPaises.add(chi);
-		listaPaises.add(par);
-		
-		return listaPaises;
-	}
+	
 
 }

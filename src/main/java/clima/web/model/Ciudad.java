@@ -1,19 +1,20 @@
 package clima.web.model;
 
 public class Ciudad {
-	private int id;
-	private String pais;
+	private Integer id;
+	private Pais pais;
 	private String nombre;
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getPais() {
+	public Pais getPais() {
 		return pais;
 	}
-	public void setPais(String pais) {
+	public void setPais(Pais pais) {
 		this.pais = pais;
 	}
 	public String getNombre() {
